@@ -588,7 +588,7 @@ def main():
                                   lengthWindow=windowSizeInSamples, Ot=0.25, \
                                   perF0=chirpPerF0, \
                                   depthChirpInSemiTone=.15, loadWF0=True,\
-                                  analysisWindow='sinebell')
+                                  analysisWindow='hanning')
     WF0 = WF0[0:F, :] # ensure same size as SX 
     NF0 = F0Table.size # number of harmonic combs
     # Normalization: 
