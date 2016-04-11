@@ -21,24 +21,26 @@ SX = abs(X).^2;
 %% Generating the fixed dictionaries
 minF0 = 100;
 maxF0 = 800;
-stepNotes = 4;
-Oq = 0.5;
-perF0 = 2;
-depthChirpInSemiTone = 0.5; 
-WF0 = generateWF0_chirped(minF0,maxF0,fs,nfft,stepNotes,lengthWindow,Oq,perF0,depthChirpInSemiTone); 
+chirpPerF0 = 1;
+stepNotes = 20;
+Oq = 0.25;
+perF0 = chirpPerF0;
+depthChirpInSemiTone = 0.15; 
+[F0Table, WF0] = generateWF0_chirped(minF0,maxF0,fs,nfft,stepNotes,lengthWindow,Oq,perF0,depthChirpInSemiTone); 
+WF0 = WF0(1:F,:);
 WF0 = WF0./(repmat(max(WF0),size(WF0,1),1));
-
+%%
 numberFrequencyBins = F;
 frequencyScale = 'linear';
-numberOfBasis = 20;
+numberOfBasis = 30;
 overlap = 0.75;
 WGAMMA = generateWGAMMA(numberFrequencyBins,numberOfBasis,overlap);
-WGAMMA = WGAMMA./(repmat(max(WGAMMA),F,1));
+% WGAMMA = WGAMMA./(repmat(max(WGAMMA),F,1));
     
 %% Parameter Estimation
-K = 50; R = 30;
+K = 10; R = 40;
 iter = 100;
 Beta = 0;
-WF0 = WF0(1:F,:);
+
 [SXhat, HGAMMA, HPHI, HF0, WM, HM, recoError] = SIMM(SX, WF0, WGAMMA, K, R, iter, Beta);
 

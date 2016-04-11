@@ -4,7 +4,7 @@ function WGM = generateWGAMMA(numberFrequencyBins,numberOfBasis,overlap)
 numberOfWindowsForUnit = ceil(1.0/(1-overlap));
 overlap = 1.0 - 1.0/double(numberOfWindowsForUnit);
 lengthSineWindow = ceil(numberFrequencyBins/((1.0-overlap)*(numberOfBasis - 1)+1-2*overlap));
-mappingFrequency = 1:numberFrequencyBins';
+mappingFrequency = [1:numberFrequencyBins]';
 sizeBigWindow = 2.0 * numberFrequencyBins;
 
 firstWindowCenter = -numberOfWindowsForUnit + 1;
