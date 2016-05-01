@@ -53,12 +53,12 @@ for i = 1:iter
 %     SPHI = max(WGAMMA*HGAMMA*HPHI,eps);
 %     SM = WM*HM;
     SXhat = max(SPHI.*SF0 + SM,eps);
-    recoError(i,1) = ISDistortion(SXhat,SX);
+    recoError(i,1) = ISDistortion(SX,SXhat);
     disp(recoError(i,1));
-
+%%
 %%% updating HPHI %%%
-    tempNum = (SPHI .* SX)./max(SXhat.^2, eps);
-    tempDen = SPHI./max(SXhat, eps);
+    tempNum = (SF0 .* SX)./max(SXhat.^2, eps);
+    tempDen = SF0./max(SXhat, eps);
     HPHI = HPHI.*((WPHI'*tempNum)./max((WPHI'*tempDen), eps)).^omega;
     sumHPHI = sum(HPHI,1);
     HPHI(:,sumHPHI>0) = HPHI(:,sumHPHI>0)./repmat(sumHPHI(sumHPHI>0),K,1);
@@ -67,9 +67,9 @@ for i = 1:iter
     SPHI = max(WPHI*HPHI,eps);
 %     SM = WM*HM;
     SXhat = max(SPHI.*SF0 + SM,eps);
-    recoError(i,2) = ISDistortion(SXhat,SX);
+    recoError(i,2) = ISDistortion(SX,SXhat);
     disp(recoError(i,2));
-
+%%
 %%% updating HM %%%
     tempNum = SX./max(SXhat.^2, eps);
     tempDen = 1./max(SXhat, eps);
@@ -78,9 +78,9 @@ for i = 1:iter
 %     SPHI = max(WGAMMA*HGAMMA*HPHI,eps);
     SM = max(WM*HM, eps);
     SXhat = max(SPHI.*SF0 + SM, eps);
-    recoError(i,3) = ISDistortion(SXhat,SX);
+    recoError(i,3) = ISDistortion(SX,SXhat);
     disp(recoError(i,3));
-
+%%
 %%% updating HGAMMA %%%
     tempNum = (SF0.*SX)./max(SXhat.^2, eps);
     tempDen = SF0./max(SXhat, eps);
@@ -98,9 +98,9 @@ for i = 1:iter
     SPHI = max(WPHI*HPHI,eps);
 %     SM = WM*HM;
     SXhat = max(SPHI.*SF0 + SM,eps);
-    recoError(i,4) = ISDistortion(SXhat,SX);
+    recoError(i,4) = ISDistortion(SX,SXhat);
     disp(recoError(i,4));
-
+%%
 %%% updating WM %%%
     tempNum = SX./max(SXhat.^2, eps);
     tempDen = 1./max(SXhat, eps);
@@ -114,7 +114,7 @@ for i = 1:iter
     SXhat = max(SPHI.*SF0 + SM,eps);
 
 
-    recoError(i,5) = ISDistortion(SXhat,SX);
+    recoError(i,5) = ISDistortion(SX,SXhat);
     disp(recoError(i,5));
     
 end
